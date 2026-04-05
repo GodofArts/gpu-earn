@@ -120,8 +120,13 @@ nav {
   padding:18px 48px;
   background:rgba(15,14,12,0.85); backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(255,255,255,0.06);
+  transition: all 0.3s ease;
 }
-.nav-logo { font-family:'Unbounded',sans-serif; font-size:17px; font-weight:900; letter-spacing:-1px; text-decoration:none; color:#f5f0e8; }
+nav.scrolled {
+  background:rgba(15,14,12,0.95);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.nav-logo { font-family:'Unbounded',sans-serif; font-size:17px; font-weight:900; letter-spacing:-1px; text-decoration:none; color:#f5f0e8; transition: all 0.3s ease; }
 .nav-logo span { color:var(--accent); }
 .nav-links { display:flex; gap:28px; list-style:none; }
 .nav-links a { font-size:12px; color:rgba(245,240,232,0.45); text-decoration:none; transition:color 0.2s; }
@@ -1148,28 +1153,28 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;">
 
-    <a href="https://explorer.io.net/explorer/home" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.transform='none'">
+    <a href="https://explorer.io.net/explorer/home" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:4px;padding:28px;transition:all 0.2s;color:inherit;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.transform='none'">
       <div style="font-size:48px;line-height:1;margin-bottom:16px;">◈</div>
-      <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#818cf8;margin-bottom:8px;"><a href="https://explorer.io.net/explorer/home" target="_blank" style="color:#818cf8;text-decoration:none;">io.net Explorer ↗</a></div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#818cf8;margin-bottom:8px;">io.net Explorer ↗</div>
       <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Живая карта GPU по всему миру — спрос, цены, количество воркеров по каждой модели карты.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#818cf8;font-weight:600;">Смотреть Explorer ↗</div>
     </a>
 
-    <a href="https://opendata.clore.ai/d/aKQRJmA4z/clore-ai?orgId=1&from=now-7d&to=now&timezone=browser" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(229,57,53,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(229,57,53,0.08)';this.style.transform='none'">
+    <a href="https://opendata.clore.ai/d/aKQRJmA4z/clore-ai?orgId=1&from=now-7d&to=now&timezone=browser" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.25);border-radius:4px;padding:28px;transition:all 0.2s;color:inherit;" onmouseover="this.style.background='rgba(229,57,53,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(229,57,53,0.08)';this.style.transform='none'">
       <div style="font-size:48px;line-height:1;margin-bottom:16px;">🔥</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#ef9a9a;margin-bottom:8px;">Clore.ai Dashboard</div>
       <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Живая статистика сети Clore — занятость GPU, доходность, активные хосты за последние 7 дней.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#ef9a9a;font-weight:600;">Смотреть Dashboard ↗</div>
     </a>
 
-    <a href="https://console.runpod.io/deploy" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(16,185,129,0.08)';this.style.transform='none'">
+    <a href="https://console.runpod.io/deploy" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:4px;padding:28px;transition:all 0.2s;color:inherit;" onmouseover="this.style.background='rgba(16,185,129,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(16,185,129,0.08)';this.style.transform='none'">
       <div style="font-size:48px;line-height:1;margin-bottom:16px;">🚀</div>
-      <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#34d399;margin-bottom:8px;"><a href="https://console.runpod.io/deploy" target="_blank" style="color:#34d399;text-decoration:none;">RunPod Deploy ↗</a></div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#34d399;margin-bottom:8px;">RunPod Deploy ↗</div>
       <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Фильтр по GPU/CPU, NVIDIA/AMD, H100/H200/B200/L4/L40 и другим. Видишь реальный спрос и цены.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#34d399;font-weight:600;">Смотреть Deploy ↗</div>
     </a>
 
-    <a href="https://dashboard.tensordock.com/deploy" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(0,188,212,0.08);border:1px solid rgba(0,188,212,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,188,212,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(0,188,212,0.08)';this.style.transform='none'">
+    <a href="https://dashboard.tensordock.com/deploy" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(0,188,212,0.08);border:1px solid rgba(0,188,212,0.25);border-radius:4px;padding:28px;transition:all 0.2s;color:inherit;" onmouseover="this.style.background='rgba(0,188,212,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(0,188,212,0.08)';this.style.transform='none'">
       <div style="font-size:48px;line-height:1;margin-bottom:16px;">⚙️</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#80deea;margin-bottom:8px;">TensorDock Deploy</div>
       <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Данные о доходности GPU по моделям — реальные цены и спрос на платформе для профессиональных хостов.</p>
@@ -1670,6 +1675,12 @@ fetchRunPodRates();
 document.addEventListener('DOMContentLoaded', function() {
   // Init calculator
   calculate();
+
+  // Инициализируем элементы для эффектов
+  let parallaxElement = document.querySelector('.parallax-element');
+  let nav = document.querySelector('nav');
+  let stickyBanner = document.getElementById('stickyBanner');
+
   // Intersection Observer для scroll-triggered анимаций
   const observerOptions = {
     threshold: 0.1,
@@ -1758,15 +1769,22 @@ document.addEventListener('DOMContentLoaded', function() {
     animate();
   };
 
-  // Parallax эффект на hero bg-text
-  let parallaxElement = document.querySelector('.parallax-element');
-  if (parallaxElement) {
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      // Subtle параллакс: движение на -0.3 × scrollY
+  // Параллакс и эффекты при скроллинге на nav и banner
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+
+    // Добавляем класс scrolled если прокрутили больше 50px
+    if (scrollY > 50) {
+      if (nav) nav.classList.add('scrolled');
+    } else {
+      if (nav) nav.classList.remove('scrolled');
+    }
+
+    // Subtle параллакс: движение на -0.3 × scrollY
+    if (parallaxElement) {
       parallaxElement.style.transform = `translateY(${scrollY * 0.3}px)`;
-    }, { passive: true });
-  }
+    }
+  }, { passive: true });
 });
 </script>
 </body>
