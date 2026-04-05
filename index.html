@@ -1354,6 +1354,9 @@ function selectPlat(btn, platId, mult) {
 }
 
 function calculate() {
+  // Инициализируем дату один раз
+  const today = new Date();
+
   const elec = parseFloat(document.getElementById('elecPrice').value) || 0.06;
   const util = parseFloat(document.getElementById('utilization').value) || 70;
   const count = parseFloat(document.getElementById('gpuCount').value) || 1;
@@ -1462,7 +1465,6 @@ function calculate() {
   tbody.innerHTML = '';
 
   // Генерируем даты за последние 7 дней
-  const today = new Date();
   const histDays = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date(today);
