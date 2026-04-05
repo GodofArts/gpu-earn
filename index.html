@@ -643,9 +643,54 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 
 /* ANIMATIONS */
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideInUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideInLeft { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideInRight { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+@keyframes scaleIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+@keyframes subtleGlow { 0%,100%{box-shadow:0 0 0 0 rgba(255,69,0,0)} 50%{box-shadow:0 0 20px 2px rgba(255,69,0,0.15)} }
+
 .hero-tag,.hero-title,.hero-desc,.hero-actions { animation:fadeUp 0.6s ease forwards; opacity:0; }
 .hero-tag{animation-delay:0.1s}.hero-title{animation-delay:0.2s}.hero-desc{animation-delay:0.3s}.hero-actions{animation-delay:0.4s}
 .hero-stats { animation:fadeUp 0.6s 0.5s ease forwards; opacity:0; }
+
+/* Scroll-triggered animations */
+.fade-in-up { opacity:0; transform:translateY(40px); transition:opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s; }
+.fade-in-up.in-view { opacity:1; transform:translateY(0); }
+
+.slide-in-up { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease, transform 0.8s ease; }
+.slide-in-up.in-view { opacity:1; transform:translateY(0); }
+
+.slide-in-left { opacity:0; transform:translateX(-40px); transition:opacity 0.8s ease, transform 0.8s ease; }
+.slide-in-left.in-view { opacity:1; transform:translateX(0); }
+
+.scale-in { opacity:0; transform:scale(0.95); transition:opacity 0.7s ease, transform 0.7s ease; }
+.scale-in.in-view { opacity:1; transform:scale(1); }
+
+.stagger-item { opacity:0; transform:translateY(40px); }
+.stagger-item.in-view { animation:slideInUp 0.8s ease forwards; }
+.stagger-item:nth-child(2).in-view { animation-delay:0.1s; }
+.stagger-item:nth-child(3).in-view { animation-delay:0.2s; }
+.stagger-item:nth-child(4).in-view { animation-delay:0.3s; }
+
+/* Hover effects - subtle */
+.btn-main, .btn-ghost, .btn-tg, .btn-consult, .btn-buy {
+  transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-main:hover, .btn-ghost:hover, .btn-tg:hover, .btn-consult:hover, .btn-buy:hover {
+  transform:translateY(-3px);
+}
+
+.platform-card { transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.platform-card:hover { transform:translateY(-4px) scale(1.01); }
+
+/* Counter animation support */
+.counter-value {
+  display:inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Parallax base */
+.parallax-element { will-change:transform; }
 
 @media(max-width:900px){
   nav{padding:14px 20px} .nav-links{display:none} section{padding:64px 20px}
@@ -679,7 +724,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-bg-text">GPU</div>
+  <div class="hero-bg-text parallax-element">GPU</div>
   <div class="hero-tag">Пассивный доход с видеокарты</div>
   <h1 class="hero-title">Твоя<br>видеокарта<br><span class="outline">работает</span><br><span class="accent">пока ты спишь</span></h1>
   <p class="hero-desc">Сдавай мощность GPU компаниям в сфере AI и получай ежедневный доход. Никаких технических знаний — только видеокарта и интернет.</p>
@@ -688,17 +733,17 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
     <a href="#how" class="btn-ghost">Как это работает</a>
   </div>
   <div class="hero-stats">
-    <div><div class="hero-stat-val">13 <span>платформ</span></div><div class="hero-stat-label">Проверенных сервисов</div></div>
-    <div><div class="hero-stat-val">$10<span>–600</span></div><div class="hero-stat-label">В месяц с одной GPU</div></div>
-    <div><div class="hero-stat-val">24<span>/7</span></div><div class="hero-stat-label">Пассивный доход</div></div>
-    <div><div class="hero-stat-val">2 <span>мин</span></div><div class="hero-stat-label">До первого запуска</div></div>
+    <div class="stagger-item"><div class="hero-stat-val">13 <span>платформ</span></div><div class="hero-stat-label">Проверенных сервисов</div></div>
+    <div class="stagger-item"><div class="hero-stat-val"><span class="counter-value">10</span><span>–600</span></div><div class="hero-stat-label">В месяц с одной GPU</div></div>
+    <div class="stagger-item"><div class="hero-stat-val">24<span>/7</span></div><div class="hero-stat-label">Пассивный доход</div></div>
+    <div class="stagger-item"><div class="hero-stat-val">2 <span>мин</span></div><div class="hero-stat-label">До первого запуска</div></div>
   </div>
 </section>
 
 <!-- HOW -->
 <section id="how">
   <div class="section-label">Принцип работы</div>
-  <h2 class="section-title">Три шага<br>до дохода</h2>
+  <h2 class="section-title slide-in-left">Три шага<br>до дохода</h2>
   <p class="section-sub">Компании нуждаются в вычислительной мощности для AI. Ты предоставляешь GPU — они платят.</p>
   <div class="how-grid">
     <div class="how-item"><div class="how-num">01</div><div class="how-title">Выбери платформу</div><p class="how-desc">Из нашего списка выбери сервис под твою видеокарту. Учти минимальные требования к VRAM.</p></div>
@@ -711,7 +756,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 <section id="history" style="background:var(--ink);color:var(--bg);padding:90px 48px;position:relative;overflow:hidden;">
   <div style="position:absolute;top:-40px;right:-60px;font-family:'Unbounded',sans-serif;font-size:220px;font-weight:900;color:rgba(255,255,255,0.03);pointer-events:none;letter-spacing:-10px;">2009</div>
   <div class="section-label" style="color:#f97316">Эпоха GPU майнинга</div>
-  <h2 class="section-title" style="color:var(--bg)">Ты помнишь<br>эти времена?</h2>
+  <h2 class="section-title slide-in-left" style="color:var(--bg)">Ты помнишь<br>эти времена?</h2>
   <p class="section-sub" style="color:rgba(245,240,232,0.55);margin-bottom:56px">От первого GPU-майнера биткоина до краха ETH-майнинга — история самой народной индустрии.</p>
 
   <div class="timeline">
@@ -759,7 +804,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 <!-- КРИПТО vs AI ДАШБОРД -->
 <section id="versus" style="background:var(--white);color:var(--ink);padding:90px 48px;">
   <div class="section-label">Сравнение эпох</div>
-  <h2 class="section-title">Крипто-майнинг<br>vs AI-вычисления</h2>
+  <h2 class="section-title slide-in-left">Крипто-майнинг<br>vs AI-вычисления</h2>
   <p class="section-sub" style="margin-bottom:48px">Что выгоднее прямо сейчас? Честное сравнение на реальных цифрах 2026 года.</p>
 
   <div class="versus-grid">
@@ -864,29 +909,29 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 <!-- PLATFORMS -->
 <section id="platforms">
   <div class="section-label">Все платформы</div>
-  <h2 class="section-title" style="color:var(--bg)">13 проверенных<br>сервисов</h2>
+  <h2 class="section-title slide-in-left" style="color:var(--bg)">13 проверенных<br>сервисов</h2>
   <p class="section-sub">Кликай на карточку — перейдёшь на сайт для регистрации.</p>
   <div class="platforms-grid">
-    <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" class="platform-card p-vast"><span class="platform-icon">⚡</span><span class="platform-arrow">↗</span><div class="platform-name">Vast.ai</div><p class="platform-desc">Крупнейший рынок GPU. Простой старт, оплата в USD. Подходит любая карта от GTX 1070.</p><div class="platform-tags"><span class="tag tag-usd">USD выплаты</span><span class="tag tag-easy">Простой старт</span><span class="tag tag-ai">AI задачи</span></div><div class="platform-earn">$5–90 / мес</div></a>
-    <a href="https://runpod.io?ref=73u38yf4" target="_blank" class="platform-card p-runpod"><span class="platform-icon">🚀</span><span class="platform-arrow">↗</span><div class="platform-name">RunPod</div><p class="platform-desc">Популярен среди AI-разработчиков. Стабильный спрос, выплаты в крипте. RTX 2080+.</p><div class="platform-tags"><span class="tag tag-usd">Crypto выплаты</span><span class="tag tag-easy">Стабильный спрос</span><span class="tag tag-ai">AI инференс</span></div><div class="platform-earn">$10–100 / мес</div></a>
-    <a href="https://gamerhash.com" target="_blank" class="platform-card p-gamerhash"><span class="platform-icon">🎮</span><span class="platform-arrow">↗</span><div class="platform-name">GamerHash AI</div><p class="platform-desc">Платформа для геймеров — зарабатывай на AI-инференсе пока не играешь. GTX 1060+, даже AMD.</p><div class="platform-tags"><span class="tag tag-token">Токен $GHX</span><span class="tag tag-easy">Для геймеров</span><span class="tag tag-ai">AI инференс</span></div><div class="platform-earn">$3–40 / мес</div></a>
-    <a href="https://io.net" target="_blank" class="platform-card p-io"><span class="platform-icon">◈</span><span class="platform-arrow">↗</span><div class="platform-name">io.net</div><p class="platform-desc">Децентрализованная сеть для AI и ML. Токен $IO, высокая доходность для RTX 3080+.</p><div class="platform-tags"><span class="tag tag-token">Токен $IO</span><span class="tag tag-depin">DePIN</span><span class="tag tag-ai">AI / ML</span></div><div class="platform-earn">$15–150 / мес</div></a>
-    <a href="https://rendernetwork.com" target="_blank" class="platform-card p-render"><span class="platform-icon">🎨</span><span class="platform-arrow">↗</span><div class="platform-name">Render Network</div><p class="platform-desc">Рендеринг 3D и AI-контента. Токен $RENDER. Один из надёжных долгосрочных проектов.</p><div class="platform-tags"><span class="tag tag-token">Токен $RENDER</span><span class="tag tag-render">3D рендеринг</span><span class="tag tag-ai">AI графика</span></div><div class="platform-earn">$8–60 / мес</div></a>
-    <a href="https://akash.network" target="_blank" class="platform-card p-akash"><span class="platform-icon">☁️</span><span class="platform-arrow">↗</span><div class="platform-name">Akash Network</div><p class="platform-desc">Децентрализованное облако. Сдаёшь GPU под AI, ML, веб-приложения. Токен $AKT.</p><div class="platform-tags"><span class="tag tag-token">Токен $AKT</span><span class="tag tag-depin">DePIN</span><span class="tag tag-hard">Требует настройки</span></div><div class="platform-earn">$8–70 / мес</div></a>
-    <a href="https://salad.com" target="_blank" class="platform-card p-salad"><span class="platform-icon">🥗</span><span class="platform-arrow">↗</span><div class="platform-name">Salad</div><p class="platform-desc">Простой старт для геймеров. AI-задачи от RTX 2070+, крипто-воркер от GTX 1060+.</p><div class="platform-tags"><span class="tag tag-easy">Простой старт</span><span class="tag tag-easy">GTX 1060+</span><span class="tag tag-ai">AI + крипто</span></div><div class="platform-earn">$3–30 / мес</div></a>
-    <a href="https://golem.network" target="_blank" class="platform-card p-golem"><span class="platform-icon">⬡</span><span class="platform-arrow">↗</span><div class="platform-name">Golem Network</div><p class="platform-desc">Первый децентрализованный вычислительный рынок. Токен $GLM, открытый исходный код.</p><div class="platform-tags"><span class="tag tag-token">Токен $GLM</span><span class="tag tag-depin">Open Source</span><span class="tag tag-hard">Для опытных</span></div><div class="platform-earn">$3–30 / мес</div></a>
-    <a href="https://bittensor.com" target="_blank" class="platform-card p-bittensor"><span class="platform-icon">🧠</span><span class="platform-arrow">↗</span><div class="platform-name">Bittensor</div><p class="platform-desc">Децентрализованная сеть AI-моделей. Токен $TAO — высокий потенциал роста.</p><div class="platform-tags"><span class="tag tag-token">Токен $TAO</span><span class="tag tag-ai">AI обучение</span><span class="tag tag-hard">Сложный старт</span></div><div class="platform-earn">$20–300 / мес</div></a>
-    <a href="https://aethir.com" target="_blank" class="platform-card p-aethir"><span class="platform-icon">◎</span><span class="platform-arrow">↗</span><div class="platform-name">Aethir</div><p class="platform-desc">Enterprise AI-облако. Токен $ATH, нужна топовая потребительская или серверная GPU.</p><div class="platform-tags"><span class="tag tag-token">Токен $ATH</span><span class="tag tag-depin">Enterprise AI</span><span class="tag tag-hard">Высокие требования</span></div><div class="platform-earn">$30–400 / мес</div></a>
-    <a href="https://app.spheron.ai/signup?ref=EYjZp4QXT" target="_blank" class="platform-card p-spheron"><span class="platform-icon">🌐</span><span class="platform-arrow">↗</span><div class="platform-name">Spheron</div><p class="platform-desc">DePIN-сеть с Fizz Node — подключай любой GPU от GTX 1650. Широкий выбор: от бюджетных до H100/B200.</p><div class="platform-tags"><span class="tag tag-depin">DePIN</span><span class="tag tag-easy">GTX 1650+</span><span class="tag tag-ai">AI / ML</span></div><div class="platform-earn">$5–80 / мес</div></a>
-    <a href="https://clore.ai/register?ref=bri7r8co" target="_blank" class="platform-card p-clore"><span class="platform-icon">🔥</span><span class="platform-arrow">↗</span><div class="platform-name">Clore.ai</div><p class="platform-desc">Маркетплейс с минимальной комиссией 1.8% — хост зарабатывает больше чем на конкурентах. Оплата в BTC или токене CLORE. GTX 1060+.</p><div class="platform-tags"><span class="tag tag-token">BTC / CLORE</span><span class="tag tag-easy">Низкие комиссии</span><span class="tag tag-ai">AI + майнинг</span></div><div class="platform-earn">$5–60 / мес</div></a>
-    <a href="https://tensordock.com" target="_blank" class="platform-card p-tensordock"><span class="platform-icon">⚙️</span><span class="platform-arrow">↗</span><div class="platform-name">TensorDock</div><p class="platform-desc">Профессиональный маркетплейс для датацентров. Выплаты через Stripe. Только дата-центры — не домашние ПК.</p><div class="platform-tags"><span class="tag tag-usd">Stripe выплаты</span><span class="tag tag-hard">Датацентр</span><span class="tag tag-ai">AI / ML</span></div><div class="platform-earn">$100–300 / мес</div></a>
+    <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" class="platform-card p-vast scale-in"><span class="platform-icon">⚡</span><span class="platform-arrow">↗</span><div class="platform-name">Vast.ai</div><p class="platform-desc">Крупнейший рынок GPU. Простой старт, оплата в USD. Подходит любая карта от GTX 1070.</p><div class="platform-tags"><span class="tag tag-usd">USD выплаты</span><span class="tag tag-easy">Простой старт</span><span class="tag tag-ai">AI задачи</span></div><div class="platform-earn">$5–90 / мес</div></a>
+    <a href="https://runpod.io?ref=73u38yf4" target="_blank" class="platform-card p-runpod scale-in"><span class="platform-icon">🚀</span><span class="platform-arrow">↗</span><div class="platform-name">RunPod</div><p class="platform-desc">Популярен среди AI-разработчиков. Стабильный спрос, выплаты в крипте. RTX 2080+.</p><div class="platform-tags"><span class="tag tag-usd">Crypto выплаты</span><span class="tag tag-easy">Стабильный спрос</span><span class="tag tag-ai">AI инференс</span></div><div class="platform-earn">$10–100 / мес</div></a>
+    <a href="https://gamerhash.com" target="_blank" class="platform-card p-gamerhash scale-in"><span class="platform-icon">🎮</span><span class="platform-arrow">↗</span><div class="platform-name">GamerHash AI</div><p class="platform-desc">Платформа для геймеров — зарабатывай на AI-инференсе пока не играешь. GTX 1060+, даже AMD.</p><div class="platform-tags"><span class="tag tag-token">Токен $GHX</span><span class="tag tag-easy">Для геймеров</span><span class="tag tag-ai">AI инференс</span></div><div class="platform-earn">$3–40 / мес</div></a>
+    <a href="https://io.net" target="_blank" class="platform-card p-io scale-in"><span class="platform-icon">◈</span><span class="platform-arrow">↗</span><div class="platform-name">io.net</div><p class="platform-desc">Децентрализованная сеть для AI и ML. Токен $IO, высокая доходность для RTX 3080+.</p><div class="platform-tags"><span class="tag tag-token">Токен $IO</span><span class="tag tag-depin">DePIN</span><span class="tag tag-ai">AI / ML</span></div><div class="platform-earn">$15–150 / мес</div></a>
+    <a href="https://rendernetwork.com" target="_blank" class="platform-card p-render scale-in"><span class="platform-icon">🎨</span><span class="platform-arrow">↗</span><div class="platform-name">Render Network</div><p class="platform-desc">Рендеринг 3D и AI-контента. Токен $RENDER. Один из надёжных долгосрочных проектов.</p><div class="platform-tags"><span class="tag tag-token">Токен $RENDER</span><span class="tag tag-render">3D рендеринг</span><span class="tag tag-ai">AI графика</span></div><div class="platform-earn">$8–60 / мес</div></a>
+    <a href="https://akash.network" target="_blank" class="platform-card p-akash scale-in"><span class="platform-icon">☁️</span><span class="platform-arrow">↗</span><div class="platform-name">Akash Network</div><p class="platform-desc">Децентрализованное облако. Сдаёшь GPU под AI, ML, веб-приложения. Токен $AKT.</p><div class="platform-tags"><span class="tag tag-token">Токен $AKT</span><span class="tag tag-depin">DePIN</span><span class="tag tag-hard">Требует настройки</span></div><div class="platform-earn">$8–70 / мес</div></a>
+    <a href="https://salad.com" target="_blank" class="platform-card p-salad scale-in"><span class="platform-icon">🥗</span><span class="platform-arrow">↗</span><div class="platform-name">Salad</div><p class="platform-desc">Простой старт для геймеров. AI-задачи от RTX 2070+, крипто-воркер от GTX 1060+.</p><div class="platform-tags"><span class="tag tag-easy">Простой старт</span><span class="tag tag-easy">GTX 1060+</span><span class="tag tag-ai">AI + крипто</span></div><div class="platform-earn">$3–30 / мес</div></a>
+    <a href="https://golem.network" target="_blank" class="platform-card p-golem scale-in"><span class="platform-icon">⬡</span><span class="platform-arrow">↗</span><div class="platform-name">Golem Network</div><p class="platform-desc">Первый децентрализованный вычислительный рынок. Токен $GLM, открытый исходный код.</p><div class="platform-tags"><span class="tag tag-token">Токен $GLM</span><span class="tag tag-depin">Open Source</span><span class="tag tag-hard">Для опытных</span></div><div class="platform-earn">$3–30 / мес</div></a>
+    <a href="https://bittensor.com" target="_blank" class="platform-card p-bittensor scale-in"><span class="platform-icon">🧠</span><span class="platform-arrow">↗</span><div class="platform-name">Bittensor</div><p class="platform-desc">Децентрализованная сеть AI-моделей. Токен $TAO — высокий потенциал роста.</p><div class="platform-tags"><span class="tag tag-token">Токен $TAO</span><span class="tag tag-ai">AI обучение</span><span class="tag tag-hard">Сложный старт</span></div><div class="platform-earn">$20–300 / мес</div></a>
+    <a href="https://aethir.com" target="_blank" class="platform-card p-aethir scale-in"><span class="platform-icon">◎</span><span class="platform-arrow">↗</span><div class="platform-name">Aethir</div><p class="platform-desc">Enterprise AI-облако. Токен $ATH, нужна топовая потребительская или серверная GPU.</p><div class="platform-tags"><span class="tag tag-token">Токен $ATH</span><span class="tag tag-depin">Enterprise AI</span><span class="tag tag-hard">Высокие требования</span></div><div class="platform-earn">$30–400 / мес</div></a>
+    <a href="https://app.spheron.ai/signup?ref=EYjZp4QXT" target="_blank" class="platform-card p-spheron scale-in"><span class="platform-icon">🌐</span><span class="platform-arrow">↗</span><div class="platform-name">Spheron</div><p class="platform-desc">DePIN-сеть с Fizz Node — подключай любой GPU от GTX 1650. Широкий выбор: от бюджетных до H100/B200.</p><div class="platform-tags"><span class="tag tag-depin">DePIN</span><span class="tag tag-easy">GTX 1650+</span><span class="tag tag-ai">AI / ML</span></div><div class="platform-earn">$5–80 / мес</div></a>
+    <a href="https://clore.ai/register?ref=bri7r8co" target="_blank" class="platform-card p-clore scale-in"><span class="platform-icon">🔥</span><span class="platform-arrow">↗</span><div class="platform-name">Clore.ai</div><p class="platform-desc">Маркетплейс с минимальной комиссией 1.8% — хост зарабатывает больше чем на конкурентах. Оплата в BTC или токене CLORE. GTX 1060+.</p><div class="platform-tags"><span class="tag tag-token">BTC / CLORE</span><span class="tag tag-easy">Низкие комиссии</span><span class="tag tag-ai">AI + майнинг</span></div><div class="platform-earn">$5–60 / мес</div></a>
+    <a href="https://tensordock.com" target="_blank" class="platform-card p-tensordock scale-in"><span class="platform-icon">⚙️</span><span class="platform-arrow">↗</span><div class="platform-name">TensorDock</div><p class="platform-desc">Профессиональный маркетплейс для датацентров. Выплаты через Stripe. Только дата-центры — не домашние ПК.</p><div class="platform-tags"><span class="tag tag-usd">Stripe выплаты</span><span class="tag tag-hard">Датацентр</span><span class="tag tag-ai">AI / ML</span></div><div class="platform-earn">$100–300 / мес</div></a>
   </div>
 </section>
 
 <!-- КАЛЬКУЛЯТОР -->
 <section id="calculator" class="calc-section">
   <div class="section-label">Калькулятор доходности</div>
-  <h2 class="section-title">Сколько заработает<br>твоя GPU? <span class="live-badge"><span class="live-dot"></span>Vast.ai live</span></h2>
+  <h2 class="section-title slide-in-left">Сколько заработает<br>твоя GPU? <span class="live-badge"><span class="live-dot"></span>Vast.ai live</span></h2>
   <p class="section-sub calc-section-sub">Выбери карту, укажи стоимость электричества и платформу — расчёт на основе актуальных рыночных ставок.</p>
 
   <div class="calc-wrap">
@@ -972,32 +1017,32 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 
         <div class="result-main">
           <div class="result-period">ЧИСТАЯ ПРИБЫЛЬ / МЕСЯЦ</div>
-          <div class="result-amount" id="monthlyProfit">$0.00</div>
+          <div class="result-amount counter-value" id="monthlyProfit">$0.00</div>
           <div class="result-net">После вычета электричества: <span id="netMonthly">$0.00</span></div>
         </div>
 
         <div class="result-grid">
-          <div class="result-card">
+          <div class="result-card fade-in-up">
             <div class="rc-label">За сутки (доход)</div>
             <div class="rc-val green" id="dailyRevenue">$0.00</div>
             <div class="rc-sub" id="dailyNote">при <span id="utilDisp">70</span>% загрузке</div>
           </div>
-          <div class="result-card">
+          <div class="result-card fade-in-up">
             <div class="rc-label">Электричество/сутки</div>
             <div class="rc-val red" id="dailyCost">$0.00</div>
             <div class="rc-sub" id="wattDisp">— Вт потребление</div>
           </div>
-          <div class="result-card">
+          <div class="result-card fade-in-up">
             <div class="rc-label">За 7 дней</div>
             <div class="rc-val blue" id="weeklyProfit">$0.00</div>
             <div class="rc-sub">чистая прибыль</div>
           </div>
-          <div class="result-card">
+          <div class="result-card fade-in-up">
             <div class="rc-label">За год</div>
             <div class="rc-val" id="yearlyProfit">$0.00</div>
             <div class="rc-sub">прогноз (без изм. ставок)</div>
           </div>
-          <div class="result-card" style="border-color:var(--accent);background:rgba(255,69,0,0.04)">
+          <div class="result-card fade-in-up" style="border-color:var(--accent);background:rgba(255,69,0,0.04)">
             <div class="rc-label">⏱ Срок окупаемости GPU</div>
             <div class="rc-val" id="paybackVal" style="font-size:22px">—</div>
             <div class="rc-sub" id="paybackSub">исходя из чистой прибыли</div>
@@ -1581,6 +1626,81 @@ fetchRunPodRates();
 
 // Init
 calculate();
+
+// ============================================================
+// ANIMATIONS & SCROLL EFFECTS
+// ============================================================
+
+// Intersection Observer для scroll-triggered анимаций
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+
+      // Если это счётчик числа — анимировать его
+      if (entry.target.classList.contains('counter-value')) {
+        animateCounter(entry.target);
+      }
+
+      // Не наблюдать дальше (одноразовая анимация)
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+// Применить observer ко всем анимируемым элементам
+document.querySelectorAll('.fade-in-up, .slide-in-left, .scale-in, .stagger-item').forEach(el => {
+  observer.observe(el);
+});
+
+// Отдельная обработка для counter-value элементов
+document.querySelectorAll('.counter-value').forEach(el => {
+  observer.observe(el);
+});
+
+// Функция анимации счётчика
+function animateCounter(el) {
+  const text = el.textContent.trim();
+  const match = text.match(/(\d+)/);
+  if (!match) return;
+
+  const target = parseInt(match[1]);
+  const duration = 1200; // ms
+  const start = Date.now();
+
+  const animate = () => {
+    const now = Date.now();
+    const progress = Math.min((now - start) / duration, 1);
+    const value = Math.floor(target * progress);
+
+    // Заменить первое число в тексте
+    el.textContent = text.replace(/\d+/, value);
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Восстановить оригинальный текст в конце
+      el.textContent = text;
+    }
+  };
+
+  animate();
+}
+
+// Parallax эффект на hero bg-text
+let parallaxElement = document.querySelector('.parallax-element');
+if (parallaxElement) {
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    // Subtle параллакс: движение на -0.3 × scrollY
+    parallaxElement.style.transform = `translateY(${scrollY * 0.3}px)`;
+  }, { passive: true });
+}
 </script>
 </body>
 </html>
