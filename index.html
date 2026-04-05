@@ -389,6 +389,12 @@ section { padding:90px 48px; background:var(--bg); }
   border:1px solid var(--border);
   border-radius:3px;
   padding:16px;
+  transition: all 0.3s ease;
+}
+.result-card:hover {
+  transform:translateY(-2px);
+  border-color:var(--accent);
+  box-shadow: 0 6px 16px rgba(255,69,0,0.1);
 }
 
 .rc-label { font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
@@ -648,6 +654,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 @keyframes slideInRight { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
 @keyframes scaleIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
 @keyframes subtleGlow { 0%,100%{box-shadow:0 0 0 0 rgba(255,69,0,0)} 50%{box-shadow:0 0 20px 2px rgba(255,69,0,0.15)} }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
 
 .hero-tag,.hero-title,.hero-desc,.hero-actions { animation:fadeUp 0.6s ease forwards; opacity:0; }
 .hero-tag{animation-delay:0.1s}.hero-title{animation-delay:0.2s}.hero-desc{animation-delay:0.3s}.hero-actions{animation-delay:0.4s}
@@ -661,7 +668,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 .slide-in-up.in-view { opacity:1; transform:translateY(0); }
 
 .slide-in-left { opacity:0; transform:translateX(-40px); transition:opacity 0.8s ease, transform 0.8s ease; }
-.slide-in-left.in-view { opacity:1; transform:translateX(0); }
+.slide-in-left.in-view { opacity:1; transform:translateX(0); animation: none; }
 
 .scale-in { opacity:0; transform:scale(0.95); transition:opacity 0.7s ease, transform 0.7s ease; }
 .scale-in.in-view { opacity:1; transform:scale(1); }
@@ -672,16 +679,44 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 .stagger-item:nth-child(3).in-view { animation-delay:0.2s; }
 .stagger-item:nth-child(4).in-view { animation-delay:0.3s; }
 
+/* Карточки платформ со стагированием */
+.platforms-grid > :nth-child(1) { animation-delay:0s; }
+.platforms-grid > :nth-child(2) { animation-delay:0.1s; }
+.platforms-grid > :nth-child(3) { animation-delay:0.2s; }
+.platforms-grid > :nth-child(4) { animation-delay:0.3s; }
+.platforms-grid > :nth-child(5) { animation-delay:0.1s; }
+.platforms-grid > :nth-child(6) { animation-delay:0.2s; }
+.platforms-grid > :nth-child(7) { animation-delay:0.3s; }
+.platforms-grid > :nth-child(8) { animation-delay:0.1s; }
+.platforms-grid > :nth-child(9) { animation-delay:0.2s; }
+.platforms-grid > :nth-child(10) { animation-delay:0.3s; }
+.platforms-grid > :nth-child(11) { animation-delay:0.1s; }
+.platforms-grid > :nth-child(12) { animation-delay:0.2s; }
+.platforms-grid > :nth-child(13) { animation-delay:0.3s; }
+
 /* Hover effects - subtle */
 .btn-main, .btn-ghost, .btn-tg, .btn-consult, .btn-buy {
   transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .btn-main:hover, .btn-ghost:hover, .btn-tg:hover, .btn-consult:hover, .btn-buy:hover {
   transform:translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 69, 0, 0.25);
 }
 
-.platform-card { transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-.platform-card:hover { transform:translateY(-4px) scale(1.01); }
+.platform-card {
+  transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position:relative;
+  opacity:0;
+  transform:translateY(40px) scale(0.95);
+}
+.platform-card.in-view {
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+.platform-card:hover {
+  transform:translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
 
 /* Counter animation support */
 .counter-value {
@@ -703,6 +738,8 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
   .versus-grid{grid-template-columns:1fr} .versus-divider{flex-direction:row;padding-top:0}
   .md-grid{grid-template-columns:1fr 1fr}
   .tl-item{grid-template-columns:70px 1fr;gap:16px}
+  /* Живые данные сетка */
+  div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
@@ -1111,31 +1148,31 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;">
 
-    <a href="https://explorer.io.net/explorer/home" target="_blank" style="display:block;text-decoration:none;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.transform='none'">
-      <div style="font-size:28px;margin-bottom:12px;">◈</div>
+    <a href="https://explorer.io.net/explorer/home" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.transform='none'">
+      <div style="font-size:48px;line-height:1;margin-bottom:16px;">◈</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#818cf8;margin-bottom:8px;"><a href="https://explorer.io.net/explorer/home" target="_blank" style="color:#818cf8;text-decoration:none;">io.net Explorer ↗</a></div>
-      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;">Живая карта GPU по всему миру — спрос, цены, количество воркеров по каждой модели карты.</p>
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Живая карта GPU по всему миру — спрос, цены, количество воркеров по каждой модели карты.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#818cf8;font-weight:600;">Смотреть Explorer ↗</div>
     </a>
 
-    <a href="https://opendata.clore.ai/d/aKQRJmA4z/clore-ai?orgId=1&from=now-7d&to=now&timezone=browser" target="_blank" style="display:block;text-decoration:none;background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(229,57,53,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(229,57,53,0.08)';this.style.transform='none'">
-      <div style="font-size:28px;margin-bottom:12px;">🔥</div>
+    <a href="https://opendata.clore.ai/d/aKQRJmA4z/clore-ai?orgId=1&from=now-7d&to=now&timezone=browser" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(229,57,53,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(229,57,53,0.08)';this.style.transform='none'">
+      <div style="font-size:48px;line-height:1;margin-bottom:16px;">🔥</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#ef9a9a;margin-bottom:8px;">Clore.ai Dashboard</div>
-      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;">Живая статистика сети Clore — занятость GPU, доходность, активные хосты за последние 7 дней.</p>
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Живая статистика сети Clore — занятость GPU, доходность, активные хосты за последние 7 дней.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#ef9a9a;font-weight:600;">Смотреть Dashboard ↗</div>
     </a>
 
-    <a href="https://console.runpod.io/deploy" target="_blank" style="display:block;text-decoration:none;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(16,185,129,0.08)';this.style.transform='none'">
-      <div style="font-size:28px;margin-bottom:12px;">🚀</div>
+    <a href="https://console.runpod.io/deploy" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(16,185,129,0.08)';this.style.transform='none'">
+      <div style="font-size:48px;line-height:1;margin-bottom:16px;">🚀</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#34d399;margin-bottom:8px;"><a href="https://console.runpod.io/deploy" target="_blank" style="color:#34d399;text-decoration:none;">RunPod Deploy ↗</a></div>
-      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;">Фильтр по GPU/CPU, NVIDIA/AMD, H100/H200/B200/L4/L40 и другим. Видишь реальный спрос и цены.</p>
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Фильтр по GPU/CPU, NVIDIA/AMD, H100/H200/B200/L4/L40 и другим. Видишь реальный спрос и цены.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#34d399;font-weight:600;">Смотреть Deploy ↗</div>
     </a>
 
-    <a href="https://dashboard.tensordock.com/deploy" target="_blank" style="display:block;text-decoration:none;background:rgba(0,188,212,0.08);border:1px solid rgba(0,188,212,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,188,212,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(0,188,212,0.08)';this.style.transform='none'">
-      <div style="font-size:28px;margin-bottom:12px;">⚙️</div>
+    <a href="https://dashboard.tensordock.com/deploy" target="_blank" style="display:flex;flex-direction:column;text-decoration:none;background:rgba(0,188,212,0.08);border:1px solid rgba(0,188,212,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(0,188,212,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(0,188,212,0.08)';this.style.transform='none'">
+      <div style="font-size:48px;line-height:1;margin-bottom:16px;">⚙️</div>
       <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#80deea;margin-bottom:8px;">TensorDock Deploy</div>
-      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;">Данные о доходности GPU по моделям — реальные цены и спрос на платформе для профессиональных хостов.</p>
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;flex-grow:1;">Данные о доходности GPU по моделям — реальные цены и спрос на платформе для профессиональных хостов.</p>
       <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#80deea;font-weight:600;">Смотреть данные ↗</div>
     </a>
 
@@ -1657,7 +1694,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Применить observer ко всем анимируемым элементам
   const animatedElements = document.querySelectorAll('.fade-in-up, .slide-in-left, .stagger-item');
-  animatedElements.forEach(el => {
+
+  // Добавим карточки платформ
+  const platformCards = document.querySelectorAll('.platform-card');
+  const allAnimated = [...animatedElements, ...platformCards];
+
+  allAnimated.forEach((el, idx) => {
     // Проверить если элемент уже в viewport при загрузке
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight && rect.bottom > 0) {
