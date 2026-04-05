@@ -12,7 +12,7 @@
 
 <!-- Заголовок страницы — главный SEO-сигнал. Показывается в результатах поиска.
      Правило: 50–60 символов, ключевые слова в начале -->
-<title>GPU.EARN — Заработок на видеокарте | AI майнинг GPU 2025</title>
+<title>GPU.EARN — Заработок на видеокарте | AI майнинг GPU 2026</title>
 
 <!-- Описание страницы — текст под заголовком в поисковой выдаче.
      Не влияет на ранжирование напрямую, но влияет на кликабельность.
@@ -21,7 +21,7 @@
 
 <!-- Ключевые слова — Яндекс их читает, Google игнорирует.
      Перечисли 10–15 релевантных фраз через запятую -->
-<meta name="keywords" content="заработок на видеокарте, GPU майнинг AI, сдать GPU в аренду, vast.ai, io.net, пассивный доход GPU, AI вычисления заработок, майнинг нейросетей, runpod заработок, GPU аренда 2025">
+<meta name="keywords" content="заработок на видеокарте, GPU майнинг AI, сдать GPU в аренду, vast.ai, io.net, пассивный доход GPU, AI вычисления заработок, майнинг нейросетей, runpod заработок, GPU аренда 2026">
 
 <!-- Автор сайта -->
 <meta name="author" content="GPU.EARN">
@@ -760,7 +760,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 <section id="versus" style="background:var(--white);color:var(--ink);padding:90px 48px;">
   <div class="section-label">Сравнение эпох</div>
   <h2 class="section-title">Крипто-майнинг<br>vs AI-вычисления</h2>
-  <p class="section-sub" style="margin-bottom:48px">Что выгоднее прямо сейчас? Честное сравнение на реальных цифрах 2025 года.</p>
+  <p class="section-sub" style="margin-bottom:48px">Что выгоднее прямо сейчас? Честное сравнение на реальных цифрах 2026 года.</p>
 
   <div class="versus-grid">
     <!-- КРИПТО -->
@@ -853,7 +853,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
         <div class="md-bar-wrap"><div class="md-bar" style="width:100%;background:var(--border)"></div></div>
       </div>
     </div>
-    <div style="font-size:10px;color:var(--muted);margin-top:12px;text-align:center">* Данные приблизительные. Крипто-доход по монете Kaspa (KAS), AI — средние ставки <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--muted);">Vast.ai</a> 2025</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:12px;text-align:center">* Данные приблизительные. Крипто-доход по монете Kaspa (KAS), AI — средние ставки <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--muted);">Vast.ai</a> 2026</div>
   </div>
 
   <div style="text-align:center;margin-top:48px">
@@ -1245,7 +1245,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 <footer>
   <div class="footer-logo">GPU<span>.</span>EARN</div>
   <div>Справочный сайт. Не являемся партнёром или представителем указанных платформ.</div>
-  <div>© 2025 GPU.EARN</div>
+  <div>© 2026 GPU.EARN</div>
 </footer>
 
 <!-- STICKY BANNER -->
@@ -1386,28 +1386,48 @@ function calculate() {
   // Mini chart — last 14 days with slight variance
   const bars = document.getElementById('miniChart');
   bars.innerHTML = '';
-  const days = ['25','26','27','28','29','1','2','3','4','5','6','7','8','9'];
+
+  // Генерируем даты за последние 14 дней
+  const chartDays = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    chartDays.push(String(d.getDate()).padStart(2, '0'));
+  }
+
   const maxH = 80;
-  const profits = days.map((d, i) => {
+  const profits = chartDays.map((d, i) => {
     const variance = 0.75 + Math.random() * 0.5;
     return dailyProfit * variance;
   });
   const maxVal = Math.max(...profits.map(Math.abs), 0.01);
 
-  days.forEach((d, i) => {
+  chartDays.forEach((d, i) => {
     const p = profits[i];
     const h = Math.max(6, Math.abs(p) / maxVal * maxH);
-    const isToday = i === days.length - 1;
+    const isToday = i === chartDays.length - 1;
     const wrap = document.createElement('div');
     wrap.className = 'mini-bar-wrap';
     wrap.innerHTML = `<div class="mini-bar${isToday ? ' today' : ''}" style="height:${h}%;background:${p < 0 ? 'linear-gradient(180deg,#dc2626,rgba(220,38,38,0.3))' : isToday ? 'linear-gradient(180deg,#16a34a,rgba(22,163,74,0.3))' : 'linear-gradient(180deg,var(--accent),rgba(255,69,0,0.3))'}"></div><div class="mini-bar-label">${isToday ? 'сег' : d}</div>`;
     bars.appendChild(wrap);
   });
 
-  // History table
+  // History table — генерируем последние 7 дней от сегодняшней даты
   const tbody = document.getElementById('historyBody');
   tbody.innerHTML = '';
-  const histDays = ['3 мар','4 мар','5 мар','6 мар','7 мар','8 мар','9 мар'];
+
+  // Генерируем даты за последние 7 дней
+  const today = new Date();
+  const histDays = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    histDays.push(`${day}.${month}.${year}`);
+  }
+
   histDays.forEach((day, i) => {
     const v = 0.8 + Math.random() * 0.4;
     const rev = dailyRevenue * v;
