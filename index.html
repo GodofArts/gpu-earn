@@ -749,7 +749,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
       <div class="tl-year" style="color:#4ade80">2023+</div>
       <div class="tl-content">
         <div class="tl-title">Новая эра — AI вычисления</div>
-        <p class="tl-desc">Бывшие майнинговые фермы начинают сдавать GPU под AI-задачи. Появляются Vast.ai, io.net, RunPod. Та же видеокарта — новая работа. История повторяется.</p>
+        <p class="tl-desc">Бывшие майнинговые фермы начинают сдавать GPU под AI-задачи. Появляются <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:#4ade80;">Vast.ai</a>, <a href="https://io.net" target="_blank" style="color:#4ade80;">io.net</a>, <a href="https://runpod.io?ref=73u38yf4" target="_blank" style="color:#4ade80;">RunPod</a>. Та же видеокарта — новая работа. История повторяется.</p>
         <div class="tl-highlight" style="background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.3);color:#4ade80">GPU снова зарабатывают →</div>
       </div>
     </div>
@@ -802,7 +802,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
         <div class="versus-icon">🧠</div>
         <div>
           <div class="versus-name">AI GPU-вычисления</div>
-          <div class="versus-sub">Vast.ai, io.net, RunPod и др.</div>
+          <div class="versus-sub"><a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Vast.ai</a>, <a href="https://io.net" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">io.net</a>, <a href="https://runpod.io?ref=73u38yf4" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">RunPod</a> и др.</div>
         </div>
         <div class="versus-badge versus-badge-green">Растёт</div>
       </div>
@@ -853,7 +853,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
         <div class="md-bar-wrap"><div class="md-bar" style="width:100%;background:var(--border)"></div></div>
       </div>
     </div>
-    <div style="font-size:10px;color:var(--muted);margin-top:12px;text-align:center">* Данные приблизительные. Крипто-доход по монете Kaspa (KAS), AI — средние ставки Vast.ai 2025</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:12px;text-align:center">* Данные приблизительные. Крипто-доход по монете Kaspa (KAS), AI — средние ставки <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--muted);">Vast.ai</a> 2025</div>
   </div>
 
   <div style="text-align:center;margin-top:48px">
@@ -955,7 +955,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
             <button class="plat-btn" onclick="selectPlat(this,'salad',0.55)">Salad</button>
             <button class="plat-btn" onclick="selectPlat(this,'gamerhash',0.50)">GamerHash</button>
           </div>
-          <div id="platRateInfo" style="font-size:10px;color:var(--muted);margin-top:6px">Ставка Vast.ai — подтягивается автоматически</div>
+          <div id="platRateInfo" style="font-size:10px;color:var(--muted);margin-top:6px">Ставка <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--accent);">Vast.ai</a> — подтягивается автоматически</div>
         </div>
 
         <button class="calc-btn" onclick="calculate()">Рассчитать доходность →</button>
@@ -1035,18 +1035,94 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
     <table>
       <thead><tr><th>Платформа</th><th>Мин. GPU</th><th>Сложность</th><th>Тип оплаты</th><th>Доход / мес</th><th>Лучше всего для</th></tr></thead>
       <tbody>
-        <tr><td><div class="td-name">Vast.ai</div></td><td>GTX 1070</td><td class="diff-easy">● Лёгкая</td><td>USD / Crypto</td><td class="earn-val">$5–90</td><td>Первый старт</td></tr>
-        <tr><td><div class="td-name">GamerHash AI</div></td><td>GTX 1060 / AMD</td><td class="diff-easy">● Очень лёгкая</td><td>Токен $GHX</td><td class="earn-val">$3–40</td><td>Геймеры, слабые GPU</td></tr>
-        <tr><td><div class="td-name">Salad</div></td><td>GTX 1060 (крипто) / RTX 2070 (AI)</td><td class="diff-easy">● Лёгкая</td><td>Баллы / Деньги</td><td class="earn-val">$3–30</td><td>Геймеры, Windows</td></tr>
-        <tr><td><div class="td-name">RunPod</div></td><td>RTX 2080</td><td class="diff-easy">● Лёгкая</td><td>Crypto</td><td class="earn-val">$10–100</td><td>AI разработчики</td></tr>
-        <tr><td><div class="td-name">io.net</div></td><td>RTX 3080</td><td class="diff-medium">● Средняя</td><td>$IO токен</td><td class="earn-val">$15–150</td><td>Мощные GPU</td></tr>
-        <tr><td><div class="td-name">Render Network</div></td><td>RTX 2070</td><td class="diff-medium">● Средняя</td><td>$RENDER токен</td><td class="earn-val">$8–60</td><td>3D / творческие</td></tr>
-        <tr><td><div class="td-name">Akash</div></td><td>RTX 3070</td><td class="diff-hard">● Сложная</td><td>$AKT токен</td><td class="earn-val">$8–70</td><td>Технари</td></tr>
-        <tr><td><div class="td-name">Golem</div></td><td>GTX 1080</td><td class="diff-hard">● Сложная</td><td>$GLM токен</td><td class="earn-val">$3–30</td><td>Open Source</td></tr>
-        <tr><td><div class="td-name">Bittensor</div></td><td>RTX 3090</td><td class="diff-hard">● Очень сложная</td><td>$TAO токен</td><td class="earn-val">$20–300</td><td>Опытные / серверы</td></tr>
-        <tr><td><div class="td-name">Aethir</div></td><td>A100 / RTX 4090</td><td class="diff-hard">● Сложная</td><td>$ATH токен</td><td class="earn-val">$30–400</td><td>Enterprise GPU</td></tr>
+        <tr><td><div class="td-name"><a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--accent);text-decoration:none;">Vast.ai ↗</a></div></td><td>GTX 1070</td><td class="diff-easy">● Лёгкая</td><td>USD / Crypto</td><td class="earn-val">$5–90</td><td>Первый старт</td></tr>
+        <tr><td><div class="td-name"><a href="https://gamerhash.com" target="_blank" style="color:var(--accent);text-decoration:none;">GamerHash AI ↗</a></div></td><td>GTX 1060 / AMD</td><td class="diff-easy">● Очень лёгкая</td><td>Токен $GHX</td><td class="earn-val">$3–40</td><td>Геймеры, слабые GPU</td></tr>
+        <tr><td><div class="td-name"><a href="https://salad.com" target="_blank" style="color:var(--accent);text-decoration:none;">Salad ↗</a></div></td><td>GTX 1060 (крипто) / RTX 2070 (AI)</td><td class="diff-easy">● Лёгкая</td><td>Баллы / Деньги</td><td class="earn-val">$3–30</td><td>Геймеры, Windows</td></tr>
+        <tr><td><div class="td-name"><a href="https://runpod.io?ref=73u38yf4" target="_blank" style="color:var(--accent);text-decoration:none;">RunPod ↗</a></div></td><td>RTX 2080</td><td class="diff-easy">● Лёгкая</td><td>Crypto</td><td class="earn-val">$10–100</td><td>AI разработчики</td></tr>
+        <tr><td><div class="td-name"><a href="https://io.net" target="_blank" style="color:var(--accent);text-decoration:none;">io.net ↗</a></div></td><td>RTX 3080</td><td class="diff-medium">● Средняя</td><td>$IO токен</td><td class="earn-val">$15–150</td><td>Мощные GPU</td></tr>
+        <tr><td><div class="td-name"><a href="https://rendernetwork.com" target="_blank" style="color:var(--accent);text-decoration:none;">Render Network ↗</a></div></td><td>RTX 2070</td><td class="diff-medium">● Средняя</td><td>$RENDER токен</td><td class="earn-val">$8–60</td><td>3D / творческие</td></tr>
+        <tr><td><div class="td-name"><a href="https://akash.network" target="_blank" style="color:var(--accent);text-decoration:none;">Akash ↗</a></div></td><td>RTX 3070</td><td class="diff-hard">● Сложная</td><td>$AKT токен</td><td class="earn-val">$8–70</td><td>Технари</td></tr>
+        <tr><td><div class="td-name"><a href="https://golem.network" target="_blank" style="color:var(--accent);text-decoration:none;">Golem ↗</a></div></td><td>GTX 1080</td><td class="diff-hard">● Сложная</td><td>$GLM токен</td><td class="earn-val">$3–30</td><td>Open Source</td></tr>
+        <tr><td><div class="td-name"><a href="https://bittensor.com" target="_blank" style="color:var(--accent);text-decoration:none;">Bittensor ↗</a></div></td><td>RTX 3090</td><td class="diff-hard">● Очень сложная</td><td>$TAO токен</td><td class="earn-val">$20–300</td><td>Опытные / серверы</td></tr>
+        <tr><td><div class="td-name"><a href="https://aethir.com" target="_blank" style="color:var(--accent);text-decoration:none;">Aethir ↗</a></div></td><td>A100 / RTX 4090</td><td class="diff-hard">● Сложная</td><td>$ATH токен</td><td class="earn-val">$30–400</td><td>Enterprise GPU</td></tr>
       </tbody>
     </table>
+  </div>
+</section>
+
+<!-- ПРОВЕРЬ СПРОС -->
+<section style="background:var(--ink);color:var(--bg);padding:72px 48px;">
+  <div class="section-label" style="color:#f97316">Живые данные</div>
+  <h2 class="section-title" style="color:var(--bg)">Проверь спрос<br>на твою GPU</h2>
+  <p class="section-sub" style="color:rgba(245,240,232,0.55);margin-bottom:48px">Реальная загрузка и цены на рынке прямо сейчас — на сайтах платформ.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px;">
+
+    <a href="https://explorer.io.net/explorer/home" target="_blank" style="display:block;text-decoration:none;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(99,102,241,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.transform='none'">
+      <div style="font-size:28px;margin-bottom:12px;">◈</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#818cf8;margin-bottom:8px;"><a href="https://explorer.io.net/explorer/home" target="_blank" style="color:#818cf8;text-decoration:none;">io.net Explorer ↗</a></div>
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;">Живая карта GPU по всему миру — спрос, цены, количество воркеров по каждой модели карты.</p>
+      <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#818cf8;font-weight:600;">Смотреть Explorer ↗</div>
+    </a>
+
+    <a href="https://console.runpod.io/deploy" target="_blank" style="display:block;text-decoration:none;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:4px;padding:28px;transition:all 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.15)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(16,185,129,0.08)';this.style.transform='none'">
+      <div style="font-size:28px;margin-bottom:12px;">🚀</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:#34d399;margin-bottom:8px;"><a href="https://console.runpod.io/deploy" target="_blank" style="color:#34d399;text-decoration:none;">RunPod Deploy ↗</a></div>
+      <p style="font-size:12px;color:rgba(245,240,232,0.55);line-height:1.6;margin-bottom:16px;">Фильтр по GPU/CPU, NVIDIA/AMD, H100/H200/B200/L4/L40 и другим. Видишь реальный спрос и цены.</p>
+      <div style="font-size:11px;font-family:'Unbounded',sans-serif;color:#34d399;font-weight:600;">Смотреть Deploy ↗</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- AETHIR REFERRAL -->
+<section style="background:var(--white);color:var(--ink);padding:72px 48px;">
+  <div class="section-label">Специальное предложение</div>
+  <h2 class="section-title">Aethir Checker Node<br>со скидкой</h2>
+  <p class="section-sub" style="margin-bottom:36px">Aethir — Enterprise GPU-сеть с токеном $ATH. Покупка Checker Node даёт пассивный доход. С реферальным кодом — скидка при покупке.</p>
+
+  <div style="background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:32px;max-width:700px;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+      <div style="font-size:36px;">◎</div>
+      <div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--ink);">Aethir Checker Node</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">Enterprise AI-облако · Токен $ATH · Пассивный доход</div>
+      </div>
+      <div style="margin-left:auto;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.25);border-radius:2px;padding:6px 14px;">
+        <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#f97316;font-weight:600;">Скидка по коду</div>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:3px;padding:20px;margin-bottom:20px;">
+      <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:500;">Как применить реферальный код</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;">
+          <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--accent);min-width:20px;">1.</span>
+          <span>Перейди на страницу покупки Checker Node на сайте <a href="https://aethir.com" target="_blank" style="color:var(--accent);">Aethir</a></span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;">
+          <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--accent);min-width:20px;">2.</span>
+          <span>Найди поле <strong>"Referral Code"</strong> на странице покупки</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;">
+          <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--accent);min-width:20px;">3.</span>
+          <span>Вставь код ниже — получишь скидку или ребейт на покупку</span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;">
+          <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;color:var(--accent);min-width:20px;">4.</span>
+          <span>Подтверди применение кода перед оплатой</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+      <div style="font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Реферальный код:</div>
+      <div id="aethirCode" style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:2px;letter-spacing:1px;">ОЖИДАЕМ КОД</div>
+      <button onclick="navigator.clipboard.writeText(document.getElementById('aethirCode').textContent).then(()=>{this.textContent='Скопировано ✓';setTimeout(()=>this.textContent='Скопировать',2000)})" style="background:transparent;border:1px solid var(--border);border-radius:2px;padding:10px 16px;font-family:'Geologica',sans-serif;font-size:12px;cursor:pointer;transition:all 0.15s;">Скопировать</button>
+    </div>
+
+    <a href="https://aethir.com" target="_blank" class="btn-main" style="display:inline-block;">Перейти на Aethir →</a>
+    <div style="font-size:10px;color:var(--muted);margin-top:12px;">* Код будет обновлён после подтверждения партнёрской программы</div>
   </div>
 </section>
 
@@ -1063,7 +1139,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
         <div class="tg-perk"><div class="perk-icon">🛠</div>Пошаговые гайды по настройке каждого сервиса</div>
         <div class="tg-perk"><div class="perk-icon">💬</div>Чат с другими провайдерами GPU</div>
       </div>
-      <a href="https://t.me/" class="btn-tg">→ Перейти в Telegram</a>
+      <a href="https://t.me/gpu_earn" class="btn-tg">→ Перейти в Telegram</a>
     </div>
     <div class="tg-plans">
       <div class="plan-card"><div><div class="plan-name">Бесплатно</div><div class="plan-desc">Базовый канал, новости</div></div><div><div class="plan-price">$0</div><div class="plan-per">навсегда</div></div></div>
@@ -1101,7 +1177,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
         <div class="consult-item">Настройка кошелька и вывода</div>
         <div class="consult-item">30 дней поддержки в Telegram</div>
       </div>
-      <a href="https://t.me/" class="btn-consult">→ Написать в Telegram · $15</a>
+      <a href="https://t.me/gpu_earn" class="btn-consult">→ Написать в Telegram · $15</a>
     </div>
     <div class="support-card donate">
       <span class="s-icon">☕</span>
@@ -1127,10 +1203,10 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
   <div class="section-label">Частые вопросы</div>
   <h2 class="section-title">Есть<br>вопросы?</h2>
   <div class="faq-list">
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Какая видеокарта мне нужна?</div><div class="faq-a">Минимально — GTX 1060 6GB для Salad. Для большинства платформ подойдёт GTX 1070 / RTX 2060 и выше. Чем мощнее карта, тем больше заработок. RTX 3080+ откроет доступ к самым доходным платформам.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Какая видеокарта мне нужна?</div><div class="faq-a">Минимально — GTX 1060 6GB для <a href="https://salad.com" target="_blank" style="color:var(--accent);">Salad</a> и <a href="https://gamerhash.com" target="_blank" style="color:var(--accent);">GamerHash</a>. Для большинства платформ подойдёт GTX 1070 / RTX 2060 и выше. Чем мощнее карта, тем больше заработок. RTX 3080+ откроет доступ к самым доходным платформам — <a href="https://io.net" target="_blank" style="color:var(--accent);">io.net</a>, <a href="https://runpod.io?ref=73u38yf4" target="_blank" style="color:var(--accent);">RunPod</a>.</div></div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Мешает ли это использовать компьютер?</div><div class="faq-a">Большинство платформ автоматически снижают нагрузку когда ты начинаешь использовать GPU. Можно настроить расписание — GPU работает только ночью или когда ты не за компьютером.</div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Как выводить деньги в рублях?</div><div class="faq-a">Большинство платформ платят в USDT или собственных токенах. Далее — меняешь на Binance, ByBit или через P2P на рубли на карту. Vast.ai поддерживает прямые USD выплаты.</div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Выгодно ли при российских ценах на электричество?</div><div class="faq-a">При тарифе до 5 руб/кВт — да, большинство карт работают в плюс. RTX 3080 потребляет ~220W, за месяц 24/7 это ~158 кВт = ~790 руб. При заработке $30–50 это выгодно. Используй калькулятор выше чтобы посчитать для своей карты.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Как выводить деньги в рублях?</div><div class="faq-a">Большинство платформ платят в USDT или собственных токенах. Далее — меняешь на Binance, ByBit или через P2P на рубли на карту. <a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--accent);">Vast.ai</a> поддерживает прямые USD выплаты.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Выгодно ли при российских ценах на электричество?</div><div class="faq-a">При тарифе до 5 руб/кВт — да, большинство карт работают в плюс. RTX 3080 потребляет ~220W, за месяц 24/7 это ~158 кВт = ~790 руб. При заработке $30–50 это выгодно. Используй <a href="#calculator" style="color:var(--accent);">калькулятор выше</a> чтобы посчитать для своей карты.</div></div>
     <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Безопасно ли это для видеокарты?</div><div class="faq-a">Нагрузка сравнима с майнингом криптовалют. Следи за температурой — не выше 85°C. Убедись что в корпусе хорошая вентиляция. При правильных условиях риск минимален.</div></div>
   </div>
 </section>
@@ -1154,7 +1230,7 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
 <div class="sticky-banner" id="stickyBanner">
   <div class="banner-text"><strong>Не знаешь с чего начать?</strong> — Получи бесплатный гайд для новичков в Telegram</div>
   <div class="banner-actions">
-    <button class="btn-banner-main">Получить гайд →</button>
+    <button class="btn-banner-main" onclick="window.open('https://t.me/gpu_earn','_blank')">Получить гайд →</button>
     <button class="btn-banner-close" onclick="document.getElementById('stickyBanner').classList.remove('show')">×</button>
   </div>
 </div>
