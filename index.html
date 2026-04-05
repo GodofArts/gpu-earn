@@ -1624,14 +1624,13 @@ async function fetchRunPodRates() {
 fetchVastRates();
 fetchRunPodRates();
 
-// Init
-calculate();
-
 // ============================================================
 // ANIMATIONS & SCROLL EFFECTS
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Init calculator
+  calculate();
   // Intersection Observer для scroll-triggered анимаций
   const observerOptions = {
     threshold: 0.1,
