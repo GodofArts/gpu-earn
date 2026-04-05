@@ -1300,21 +1300,21 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
         <div style="margin-bottom:14px;">
           <div style="font-weight:600;color:#1a1a2e;margin-bottom:4px">USDT</div>
           <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Сеть BSC/BEP20:</div>
-          <div style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);margin-bottom:8px;border:1px solid var(--border)">0x877c8baf230726857c885992c2f520d43ae4d390</div>
+          <div class="wallet-address" data-address="0x877c8baf230726857c885992c2f520d43ae4d390" style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);margin-bottom:8px;border:1px solid var(--border);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--border)';this.style.boxShadow='0 2px 8px rgba(255,69,0,0.15)'" onmouseout="this.style.background='var(--card)';this.style.boxShadow='none'">0x877c8baf230726857c885992c2f520d43ae4d390</div>
           <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Сеть TRX/TRC20:</div>
-          <div style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);border:1px solid var(--border)">TJxaWKkNMf2PX7DVYRbxGQrH3SnQ5XrVtb</div>
+          <div class="wallet-address" data-address="TJxaWKkNMf2PX7DVYRbxGQrH3SnQ5XrVtb" style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--border)';this.style.boxShadow='0 2px 8px rgba(255,69,0,0.15)'" onmouseout="this.style.background='var(--card)';this.style.boxShadow='none'">TJxaWKkNMf2PX7DVYRbxGQrH3SnQ5XrVtb</div>
         </div>
 
         <div style="margin-bottom:14px;padding-top:12px;border-top:1px solid var(--border)">
           <div style="font-weight:600;color:#1a1a2e;margin-bottom:4px">ETH</div>
           <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Сеть ERC20:</div>
-          <div style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);border:1px solid var(--border)">0x877c8baf230726857c885992c2f520d43ae4d390</div>
+          <div class="wallet-address" data-address="0x877c8baf230726857c885992c2f520d43ae4d390" style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--border)';this.style.boxShadow='0 2px 8px rgba(255,69,0,0.15)'" onmouseout="this.style.background='var(--card)';this.style.boxShadow='none'">0x877c8baf230726857c885992c2f520d43ae4d390</div>
         </div>
 
         <div style="padding-top:12px;border-top:1px solid var(--border)">
           <div style="font-weight:600;color:#1a1a2e;margin-bottom:4px">BTC</div>
           <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Сеть Bitcoin:</div>
-          <div style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);border:1px solid var(--border)">12ULHXgcqwGYorYFMDNhk1XoemEjZYr79x</div>
+          <div class="wallet-address" data-address="12ULHXgcqwGYorYFMDNhk1XoemEjZYr79x" style="background:var(--card);padding:8px 10px;border-radius:2px;word-break:break-all;font-family:monospace;font-size:10px;color:var(--ink);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--border)';this.style.boxShadow='0 2px 8px rgba(255,69,0,0.15)'" onmouseout="this.style.background='var(--card)';this.style.boxShadow='none'">12ULHXgcqwGYorYFMDNhk1XoemEjZYr79x</div>
         </div>
       </div>
 
@@ -1810,6 +1810,31 @@ document.addEventListener('DOMContentLoaded', function() {
       parallaxElement.style.transform = `translateY(${scrollY * 0.3}px)`;
     }
   }, { passive: true });
+
+  // Функция копирования адреса в буфер обмена
+  document.querySelectorAll('.wallet-address').forEach(el => {
+    el.addEventListener('click', function() {
+      const address = this.getAttribute('data-address');
+      const originalText = this.innerText;
+
+      navigator.clipboard.writeText(address).then(() => {
+        // Меняем текст на "Скопировано ✓"
+        this.innerText = '✓ Скопировано в буфер обмена';
+        this.style.background = 'rgba(22,163,74,0.1)';
+        this.style.color = '#16a34a';
+
+        // Возвращаем оригинальный текст через 2 сек
+        setTimeout(() => {
+          this.innerText = originalText;
+          this.style.background = 'var(--card)';
+          this.style.color = 'var(--ink)';
+        }, 2000);
+      }).catch(() => {
+        // Fallback если копирование не сработало
+        alert('Скопируйте адрес вручную: ' + address);
+      });
+    });
+  });
 });
 </script>
 </body>
