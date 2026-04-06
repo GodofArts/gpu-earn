@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+*.db
+*.db-journal
+/server/db/
+
+# Uploads
+/server/uploads/guides/
+/server/uploads/reports/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Testing
+.coverage/
+*.lcov
+
+# Logs
+logs/
+*.log
+
+# Temp
+tmp/
+temp/
