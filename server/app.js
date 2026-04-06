@@ -11,6 +11,8 @@ require('dotenv').config();
 const db = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
 const authRoutes = require('./routes/auth');
+const guideRoutes = require('./routes/guides');
+const subscriptionRoutes = require('./routes/subscriptions');
 
 const app = express();
 
@@ -24,7 +26,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// Body parser middleware
+// Webhook routes with raw body (must be before body parser)
+const paymentRoutes = require('./routes/payments');
+app.use('/api/payments', paymentRoutes);
+
+// Body parser middleware (for all other routes)
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
@@ -59,6 +65,8 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authLimiter, authRoutes);
+app.use('/api/guides', guideRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
 
 // 404 handler
 app.use((req, res) => {

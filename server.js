@@ -3,6 +3,7 @@
  */
 
 require('dotenv').config();
+const express = require('express');
 const app = require('./server/app');
 const db = require('./server/config/database');
 
@@ -17,6 +18,19 @@ const startServer = async () => {
     await db.initDatabase();
     console.log('✅ Database initialized');
 
+    // Middleware to store raw body for webhook verification
+    app.use((req, res, next) => {
+      if (req.path.includes('/webhooks') || req.path.includes('/webhook')) {
+        req.rawBody = '';
+        req.on('data', chunk => {
+          req.rawBody += chunk.toString();
+        });
+        req.on('end', next);
+      } else {
+        next();
+      }
+    });
+
     // Start HTTP server
     server = app.listen(PORT, () => {
       console.log(`
@@ -28,12 +42,25 @@ const startServer = async () => {
 ║ API Base URL: http://localhost:${PORT}                    ║
 ║ Database: ${process.env.DATABASE_PATH || './server/db/gpu-earn.db'}
 ║                                                            ║
-║ Available Endpoints:                                       ║
+║ Available API Endpoints:                                   ║
 ║   POST   /api/auth/register                               ║
 ║   POST   /api/auth/login                                  ║
 ║   POST   /api/auth/refresh                                ║
 ║   GET    /api/auth/me (protected)                          ║
-║   POST   /api/auth/logout (protected)                      ║
+║                                                            ║
+║   GET    /api/guides                                       ║
+║   GET    /api/guides/:id                                   ║
+║   POST   /api/guides/:id/purchase (protected)             ║
+║   GET    /api/guides/:id/access (protected)               ║
+║                                                            ║
+║   GET    /api/subscriptions (protected)                    ║
+║   POST   /api/subscriptions/upgrade (protected)            ║
+║   POST   /api/subscriptions/cancel (protected)             ║
+║                                                            ║
+║   POST   /api/payments/stripe/webhook                      ║
+║   POST   /api/payments/yookassa/webhook                    ║
+║   GET    /api/payments/status/:paymentId (protected)       ║
+║                                                            ║
 ║   GET    /health                                           ║
 ╚════════════════════════════════════════════════════════════╝
       `);
