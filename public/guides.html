@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гайды - GPU.EARN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        nav a, nav button {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        nav a:hover, nav button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .guide-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c33;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3c3;
+        }
+
+        @media (max-width: 768px) {
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>💎 GPU.EARN Гайды</h1>
+            <nav>
+                <a href="/">← Главная</a>
+                <a href="/" id="nav-dashboard" style="display: none;">📊 Кабинет</a>
+                <button id="nav-logout" style="display: none;">Выход</button>
+                <a href="/dashboard.html" id="nav-login">🔐 Вход</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="error-message"></div>
+        <div id="success-message"></div>
+
+        <h2 style="margin-bottom: 20px;">Выберите гайд:</h2>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Все гайды</button>
+            <button class="filter-btn" data-filter="beginner">Начинающим</button>
+            <button class="filter-btn" data-filter="advanced">Продвинутым</button>
+            <button class="filter-btn" data-filter="all_platforms">Мегапак</button>
+        </div>
+
+        <div id="loading" class="loading">Загружаем гайды...</div>
+        <div class="guides-grid" id="guides-grid" style="display: none;"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000';
+        let allGuides = [];
+        let currentUser = null;
+
+        // Check auth on page load
+        function checkAuth() {
+            const token = localStorage.getItem('accessToken');
+            const dashboard = document.getElementById('nav-dashboard');
+            const logout = document.getElementById('nav-logout');
+            const login = document.getElementById('nav-login');
+
+            if (token) {
+                dashboard.style.display = 'inline-block';
+                logout.style.display = 'inline-block';
+                login.style.display = 'none';
+
+                // Get current user
+                fetch(`${API_BASE}/api/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            currentUser = data.data;
+                        }
+                    })
+                    .catch(err => console.error('Auth check failed:', err));
+            } else {
+                dashboard.style.display = 'none';
+                logout.style.display = 'none';
+                login.style.display = 'inline-block';
+            }
+        }
+
+        // Load guides from API
+        async function loadGuides() {
+            try {
+                const response = await fetch(`${API_BASE}/api/guides`);
+                const data = await response.json();
+
+                if (data.success) {
+                    allGuides = data.data;
+                    displayGuides(allGuides);
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('guides-grid').style.display = 'grid';
+                } else {
+                    showError('Ошибка при загрузке гайдов');
+                }
+            } catch (err) {
+                showError('Не удалось подключиться к серверу');
+                console.error('Error:', err);
+            }
+        }
+
+        // Display guides
+        function displayGuides(guides) {
+            const grid = document.getElementById('guides-grid');
+            grid.innerHTML = '';
+
+            if (guides.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Гайды не найдены</p>';
+                return;
+            }
+
+            guides.forEach(guide => {
+                const card = document.createElement('div');
+                card.className = 'guide-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${guide.title}</div>
+                            <div class="card-category">${getCategoryName(guide.category)}</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">${guide.description}</p>
+                        <div class="card-price">$${guide.price_usd}</div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" onclick="buyGuide(${guide.id})">
+                                Купить
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter guides
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+                const filtered = filter === 'all'
+                    ? allGuides
+                    : allGuides.filter(g => g.category === filter);
+
+                displayGuides(filtered);
+            });
+        });
+
+        // Buy guide
+        async function buyGuide(guideId) {
+            const token = localStorage.getItem('accessToken');
+
+            if (!token) {
+                showError('Пожалуйста, войдите в аккаунт');
+                setTimeout(() => {
+                    window.location.href = '/dashboard.html';
+                }, 1500);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/guides/${guideId}/purchase`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ paymentMethod: 'stripe' })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const checkoutUrl = data.data.checkoutUrl;
+                    // In production: redirect to Stripe
+                    // For now: show message
+                    showSuccess(`✅ Checkout создан! Session: ${data.data.sessionId}`);
+
+                    // Simulate payment for demo
+                    console.log('Checkout URL:', checkoutUrl);
+                    console.log('Session ID:', data.data.sessionId);
+                } else {
+                    showError(data.message || 'Ошибка при создании платежа');
+                }
+            } catch (err) {
+                showError('Ошибка при обработке платежа');
+                console.error('Error:', err);
+            }
+        }
+
+        // Logout
+        document.getElementById('nav-logout').addEventListener('click', () => {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            window.location.reload();
+        });
+
+        // Show error
+        function showError(msg) {
+            const el = document.getElementById('error-message');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 5000);
+        }
+
+        // Show success
+        function showSuccess(msg) {
+            const el = document.getElementById('success-message');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 5000);
+        }
+
+        // Get category name
+        function getCategoryName(category) {
+            const names = {
+                'beginner': '🟢 Начинающим',
+                'advanced': '🔴 Продвинутым',
+                'all_platforms': '💎 Мегапак'
+            };
+            return names[category] || category;
+        }
+
+        // Init
+        checkAuth();
+        loadGuides();
+    </script>
+</body>
+</html>
