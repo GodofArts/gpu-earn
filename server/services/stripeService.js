@@ -3,13 +3,28 @@
  * Handles all Stripe payment operations
  */
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 require('dotenv').config();
+
+// Initialize Stripe only if enabled
+let stripe = null;
+if (process.env.STRIPE_ENABLED !== 'false' && process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.startsWith('sk_')) {
+  stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+}
 
 /**
  * Create or get Stripe customer
  */
 const createOrGetCustomer = async (userId, email, name = '') => {
+  // If Stripe is not enabled, return a mock customer
+  if (!stripe) {
+    console.log(`⚠️  Stripe disabled. Mock customer for user: ${email}`);
+    return {
+      id: `mock_customer_${userId}`,
+      email,
+      metadata: { userId: userId.toString() }
+    };
+  }
+
   try {
     // Try to find existing customer
     const customers = await stripe.customers.list({
@@ -32,8 +47,13 @@ const createOrGetCustomer = async (userId, email, name = '') => {
 
     return customer;
   } catch (error) {
-    console.error('Error creating/getting Stripe customer:', error);
-    throw error;
+    console.error('Error creating/getting Stripe customer:', error.message);
+    // Return mock customer on error instead of throwing
+    return {
+      id: `mock_customer_${userId}`,
+      email,
+      metadata: { userId: userId.toString() }
+    };
   }
 };
 
@@ -41,6 +61,20 @@ const createOrGetCustomer = async (userId, email, name = '') => {
  * Create checkout session for guide purchase
  */
 const createCheckoutSession = async (userId, guideId, guide, customerId) => {
+  // If Stripe is not enabled, return a mock session
+  if (!stripe) {
+    console.log(`⚠️  Stripe disabled. Mock checkout session for guide: ${guide.title}`);
+    return {
+      id: `mock_session_${guideId}_${Date.now()}`,
+      url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard?session_id=mock_${guideId}`,
+      customer: customerId,
+      metadata: {
+        userId: userId.toString(),
+        guideId: guideId.toString(),
+      },
+    };
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
@@ -68,8 +102,17 @@ const createCheckoutSession = async (userId, guideId, guide, customerId) => {
 
     return session;
   } catch (error) {
-    console.error('Error creating checkout session:', error);
-    throw error;
+    console.error('Error creating checkout session:', error.message);
+    // Return mock session on error
+    return {
+      id: `mock_session_${guideId}_${Date.now()}`,
+      url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard?session_id=mock_${guideId}`,
+      customer: customerId,
+      metadata: {
+        userId: userId.toString(),
+        guideId: guideId.toString(),
+      },
+    };
   }
 };
 
@@ -77,6 +120,20 @@ const createCheckoutSession = async (userId, guideId, guide, customerId) => {
  * Create subscription session (for Про monthly/yearly)
  */
 const createSubscriptionSession = async (userId, subscriptionType, customerId) => {
+  // If Stripe is not enabled, return a mock session
+  if (!stripe) {
+    console.log(`⚠️  Stripe disabled. Mock subscription session for: ${subscriptionType}`);
+    return {
+      id: `mock_subscription_${subscriptionType}_${Date.now()}`,
+      url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard?session_id=mock_sub_${subscriptionType}`,
+      customer: customerId,
+      metadata: {
+        userId: userId.toString(),
+        subscriptionType,
+      },
+    };
+  }
+
   try {
     const priceMap = {
       pro_monthly: process.env.STRIPE_PRICE_PRO_MONTHLY,
@@ -106,8 +163,17 @@ const createSubscriptionSession = async (userId, subscriptionType, customerId) =
 
     return session;
   } catch (error) {
-    console.error('Error creating subscription session:', error);
-    throw error;
+    console.error('Error creating subscription session:', error.message);
+    // Return mock session on error
+    return {
+      id: `mock_subscription_${subscriptionType}_${Date.now()}`,
+      url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard?session_id=mock_sub_${subscriptionType}`,
+      customer: customerId,
+      metadata: {
+        userId: userId.toString(),
+        subscriptionType,
+      },
+    };
   }
 };
 

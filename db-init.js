@@ -92,6 +92,60 @@ db.exec(schema, (err) => {
     });
   });
 
+  // Insert sample platforms (optional)
+  const samplePlatforms = [
+    {
+      name: 'Vast.ai',
+      slug: 'vast-ai',
+      category: 'business',
+      earning_type: 'Hourly rental',
+      profit_level: 'высокая'
+    },
+    {
+      name: 'io.net',
+      slug: 'io-net',
+      category: 'business',
+      earning_type: 'Token rewards',
+      profit_level: 'высокая'
+    },
+    {
+      name: 'RunPod',
+      slug: 'runpod',
+      category: 'business',
+      earning_type: 'Per-hour billing',
+      profit_level: 'высокая'
+    },
+    {
+      name: 'Salad',
+      slug: 'salad',
+      category: 'single_pc',
+      earning_type: 'Passive per hour',
+      profit_level: 'низкая'
+    },
+    {
+      name: 'Clore.ai',
+      slug: 'clore-ai',
+      category: 'miners',
+      earning_type: 'Pay-per-task',
+      profit_level: 'низко-средняя'
+    },
+  ];
+
+  let platformCount = 0;
+  samplePlatforms.forEach((platform) => {
+    const sql = `INSERT OR IGNORE INTO platforms
+                 (name, slug, category, earning_type, profit_level)
+                 VALUES (?, ?, ?, ?, ?)`;
+    db.run(sql, [platform.name, platform.slug, platform.category, platform.earning_type, platform.profit_level], function(err) {
+      if (err) {
+        console.error(`❌ Error inserting platform "${platform.name}":`, err.message);
+      } else {
+        console.log(`✅ Inserted platform: ${platform.name}`);
+        platformCount++;
+      }
+    });
+  });
+
   // Close database
   setTimeout(() => {
     db.close((err) => {
@@ -101,6 +155,11 @@ db.exec(schema, (err) => {
       }
       console.log('✅ Database initialization completed successfully!');
       console.log(`✅ Sample guides inserted: ${insertCount}/${sampleGuides.length}`);
+      console.log(`✅ Sample platforms inserted: ${platformCount}/${samplePlatforms.length}`);
+      console.log('\n📝 Next steps:');
+      console.log('1. Run: npm start');
+      console.log('2. Run: node seed-platforms.js (for all 15+ platforms)');
+      console.log('3. API is ready at http://localhost:3000');
       process.exit(0);
     });
   }, 500);
