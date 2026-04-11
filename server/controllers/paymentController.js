@@ -12,7 +12,8 @@ const yookassaService = require('../services/yookassaService');
  */
 const handleStripeWebhook = async (req, res) => {
   const sig = req.headers['stripe-signature'];
-  const rawBody = req.rawBody || JSON.stringify(req.body);
+  // express.raw() middleware sets req.body as Buffer
+  const rawBody = typeof req.body === 'string' ? req.body : req.body.toString();
 
   let event;
 
@@ -107,7 +108,9 @@ const handleStripeWebhook = async (req, res) => {
  */
 const handleYooKassaWebhook = async (req, res) => {
   try {
-    const event = yookassaService.verifyWebhookSignature(req.rawBody, req.headers['x-signature']);
+    // express.raw() middleware sets req.body as Buffer
+    const rawBody = typeof req.body === 'string' ? req.body : req.body.toString();
+    const event = yookassaService.verifyWebhookSignature(rawBody, req.headers['x-signature']);
 
     if (event.type === 'payment.succeeded') {
       const payment = event.object;
