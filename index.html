@@ -1223,8 +1223,13 @@ footer { background:var(--ink); color:rgba(245,240,232,0.4); padding:36px 48px; 
   <div class="section-label">Сравнение</div>
   <h2 class="section-title">Выбери<br>подходящую</h2>
   <p class="section-sub">Сравни платформы по ключевым параметрам.</p>
+  <div class="sort-controls" style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+    <button class="sort-btn active" data-sort="complexity" style="padding:10px 16px;background:#4ade80;color:#0f0e0c;border:none;border-radius:3px;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;" onmouseover="this.style.background='#86efac'" onmouseout="this.style.background=this.classList.contains('active')?'#4ade80':'rgba(255,255,255,0.1)'">🎓 По сложности</button>
+    <button class="sort-btn" data-sort="income" style="padding:10px 16px;background:rgba(255,255,255,0.1);color:var(--ink);border:none;border-radius:3px;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;" onmouseover="this.style.background=!this.classList.contains('active')?'rgba(255,255,255,0.15)':''" onmouseout="this.style.background=this.classList.contains('active')?'#4ade80':'rgba(255,255,255,0.1)'">💰 По доходу</button>
+    <button class="sort-btn" data-sort="gpu" style="padding:10px 16px;background:rgba(255,255,255,0.1);color:var(--ink);border:none;border-radius:3px;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;" onmouseover="this.style.background=!this.classList.contains('active')?'rgba(255,255,255,0.15)':''" onmouseout="this.style.background=this.classList.contains('active')?'#4ade80':'rgba(255,255,255,0.1)'">🎮 Мин. GPU</button>
+  </div>
   <div class="table-wrap">
-    <table>
+    <table id="platformsTable">
       <thead><tr><th>Платформа</th><th>Мин. GPU</th><th>Сложность</th><th>Тип оплаты</th><th>Доход / мес</th><th>Лучше всего для</th></tr></thead>
       <tbody>
         <tr><td><div class="td-name"><a href="https://cloud.vast.ai/?ref_id=462347" target="_blank" style="color:var(--accent);text-decoration:none;">Vast.ai ↗</a></div></td><td>GTX 1070</td><td class="diff-easy">● Лёгкая</td><td>USD / Crypto</td><td class="earn-val">$5–90</td><td>Первый старт</td></tr>
@@ -1926,6 +1931,106 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Скопируйте адрес вручную: ' + address);
       });
     });
+  });
+
+  // ============================================
+  // СОРТИРОВКА ТАБЛИЦЫ ПЛАТФОРМ
+  // ============================================
+
+  // Функция для извлечения числового значения из сложности
+  function getComplexityOrder(complexityText) {
+    if (complexityText.includes('Очень лёгкая')) return 1;
+    if (complexityText.includes('Лёгкая')) return 2;
+    if (complexityText.includes('Средняя')) return 3;
+    if (complexityText.includes('Сложная')) return 4;
+    if (complexityText.includes('Очень сложная')) return 5;
+    return 10;
+  }
+
+  // Функция для извлечения максимального дохода
+  function getMaxIncome(incomeText) {
+    const match = incomeText.match(/(\d+)/g);
+    return match ? Math.max(...match.map(Number)) : 0;
+  }
+
+  // Функция для извлечения порядка GPU
+  function getGPUOrder(gpuText) {
+    const gpuRank = {
+      'GTX 1060': 1,
+      'GTX 1080': 2,
+      'GTX 1070': 2.5,
+      'GTX 1650': 3,
+      'RTX 2060': 3.5,
+      'RTX 2070': 4,
+      'RTX 2080': 5,
+      'RTX 3070': 6,
+      'RTX 3080': 7,
+      'RTX 3090': 8,
+      'RTX 4090': 9,
+      'A100': 10,
+      'A100 / RTX 4090': 10,
+      'RTX 3080+ (датацентр)': 7.5
+    };
+
+    for (const [gpu, rank] of Object.entries(gpuRank)) {
+      if (gpuText.includes(gpu)) return rank;
+    }
+    return 5; // default
+  }
+
+  // Основная функция сортировки
+  function sortTable(sortType) {
+    const table = document.getElementById('platformsTable');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    rows.sort((a, b) => {
+      if (sortType === 'complexity') {
+        // Сортировка по сложности (от лёгкого к сложному)
+        const orderA = getComplexityOrder(a.cells[2].textContent);
+        const orderB = getComplexityOrder(b.cells[2].textContent);
+        return orderA - orderB;
+      } else if (sortType === 'income') {
+        // Сортировка по максимальному доходу (от большего к меньшему)
+        const incomeA = getMaxIncome(a.cells[4].textContent);
+        const incomeB = getMaxIncome(b.cells[4].textContent);
+        return incomeB - incomeA;
+      } else if (sortType === 'gpu') {
+        // Сортировка по мин. GPU (от слабой к мощной)
+        const gpuA = getGPUOrder(a.cells[1].textContent);
+        const gpuB = getGPUOrder(b.cells[1].textContent);
+        return gpuA - gpuB;
+      }
+    });
+
+    // Добавляем отсортированные строки обратно в tbody
+    rows.forEach(row => tbody.appendChild(row));
+  }
+
+  // Обработчики кнопок сортировки
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Удаляем активный класс со всех кнопок
+      document.querySelectorAll('.sort-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'rgba(255,255,255,0.1)';
+        b.style.color = 'var(--ink)';
+      });
+
+      // Добавляем активный класс на текущую кнопку
+      this.classList.add('active');
+      this.style.background = '#4ade80';
+      this.style.color = '#0f0e0c';
+
+      // Сортируем таблицу
+      const sortType = this.getAttribute('data-sort');
+      sortTable(sortType);
+    });
+  });
+
+  // Применяем сортировку по сложности при загрузке
+  window.addEventListener('load', () => {
+    sortTable('complexity');
   });
 });
 </script>
