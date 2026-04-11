@@ -4,8 +4,13 @@
  */
 
 const db = require('../config/database');
+const fs = require('fs');
+const path = require('path');
 const stripeService = require('../services/stripeService');
 const yookassaService = require('../services/yookassaService');
+const { addWatermarkToPDF } = require('../utils/pdfGenerator');
+const { sendError, sendSuccess } = require('../utils/errorHandler');
+const { ERROR_MESSAGES, HTTP_STATUS } = require('../constants');
 
 /**
  * Get all guides (public catalog)
@@ -264,10 +269,137 @@ const getUserPurchases = async (req, res) => {
   }
 };
 
+/**
+ * Download guide PDF with watermark
+ */
+const downloadGuide = async (req, res) => {
+  try {
+    const { guideId } = req.params;
+    const userId = req.user.id;
+    const userEmail = req.user.email;
+
+    // Validate guideId
+    if (!guideId || isNaN(guideId)) {
+      return sendError(res, HTTP_STATUS.BAD_REQUEST, ERROR_MESSAGES.INVALID_INPUT);
+    }
+
+    // Get guide details
+    const guide = await db.get(
+      `SELECT id, title, file_path, file_size FROM guides WHERE id = ? AND is_published = 1`,
+      [guideId]
+    );
+
+    if (!guide) {
+      return sendError(res, HTTP_STATUS.NOT_FOUND, ERROR_MESSAGES.GUIDE_NOT_FOUND);
+    }
+
+    // Check if user has access to this guide
+    // Either through purchase (not expired) or current subscription
+    const purchase = await db.get(
+      `SELECT id, expires_at FROM purchases WHERE user_id = ? AND guide_id = ? AND expires_at > datetime('now')`,
+      [userId, guideId]
+    );
+
+    const subscription = await db.get(
+      `SELECT type, expires_at FROM subscriptions WHERE user_id = ? AND status = 'active' AND expires_at > datetime('now')`,
+      [userId]
+    );
+
+    if (!purchase && !subscription) {
+      return sendError(res, HTTP_STATUS.FORBIDDEN, ERROR_MESSAGES.NO_ACCESS);
+    }
+
+    // Construct file path
+    const filePath = path.join(__dirname, '../../server/uploads/guides', `${guideId}.pdf`);
+
+    // Check if PDF file exists
+    if (!fs.existsSync(filePath)) {
+      console.error('PDF file not found:', filePath);
+      return sendError(res, HTTP_STATUS.NOT_FOUND, 'PDF file not available');
+    }
+
+    try {
+      // Add watermark to PDF in memory
+      const pdfWithWatermark = await addWatermarkToPDF(filePath, userEmail);
+
+      // Set response headers
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${guide.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf"`,
+        'Content-Length': pdfWithWatermark.length,
+      });
+
+      // Send PDF to client
+      res.send(pdfWithWatermark);
+
+      // Update download count asynchronously
+      if (purchase) {
+        db.run(
+          `UPDATE purchases SET download_count = download_count + 1, last_download = datetime('now') WHERE id = ?`,
+          [purchase.id]
+        ).catch((err) => {
+          console.error('Failed to update download count:', err);
+        });
+      }
+    } catch (pdfError) {
+      console.error('PDF processing error:', pdfError);
+      return sendError(res, HTTP_STATUS.INTERNAL_ERROR, 'Error processing PDF');
+    }
+  } catch (err) {
+    console.error('Download guide error:', err);
+    sendError(res, HTTP_STATUS.INTERNAL_ERROR, ERROR_MESSAGES.SERVER_ERROR);
+  }
+};
+
+/**
+ * Get free guide by slug (public, no auth required)
+ * Week 6: Free Markdown guides
+ */
+const getFreeGuide = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    // Fetch guide
+    const guide = await db.get(
+      `SELECT id, title, slug, description, markdown_content, view_count, category
+       FROM guides WHERE slug = ? AND is_free = 1 AND content_type = 'markdown' AND is_published = 1`,
+      [slug]
+    );
+
+    if (!guide) {
+      return sendError(res, HTTP_STATUS.NOT_FOUND, 'Guide not found');
+    }
+
+    // Increment view count
+    await db.run(
+      `UPDATE guides SET view_count = view_count + 1 WHERE id = ?`,
+      [guide.id]
+    ).catch((err) => {
+      console.error('Failed to update view count:', err);
+    });
+
+    // Return guide with markdown content
+    return sendSuccess(res, HTTP_STATUS.OK, {
+      id: guide.id,
+      title: guide.title,
+      slug: guide.slug,
+      description: guide.description,
+      category: guide.category,
+      markdown_content: guide.markdown_content,
+      view_count: guide.view_count + 1,
+    });
+  } catch (err) {
+    console.error('Get free guide error:', err);
+    sendError(res, HTTP_STATUS.INTERNAL_ERROR, ERROR_MESSAGES.SERVER_ERROR);
+  }
+};
+
 module.exports = {
   getAllGuides,
   getGuideById,
   checkGuideAccess,
   initiateGuidePurchase,
   getUserPurchases,
+  downloadGuide,
+  getFreeGuide,
 };

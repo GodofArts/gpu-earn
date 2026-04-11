@@ -546,10 +546,61 @@
             `).join('');
         }
 
-        // Download guide (future implementation)
-        function downloadGuide(guideId) {
-            showSuccess('⏳ Функция скачивания будет доступна в Week 5!');
-            console.log('Download guide:', guideId);
+        // Download guide with watermark
+        async function downloadGuide(guideId) {
+            try {
+                const token = localStorage.getItem('accessToken');
+                if (!token) {
+                    showError('❌ Требуется вход в аккаунт');
+                    return;
+                }
+
+                // Show loading state
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '⏳ Загружаю...';
+                button.disabled = true;
+
+                // Make API request
+                const response = await fetch(
+                    `http://localhost:3000/api/guides/download/${guideId}`,
+                    {
+                        method: 'GET',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    }
+                );
+
+                // Restore button
+                button.textContent = originalText;
+                button.disabled = false;
+
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        showError('🔒 Доступ истек. Гайд больше недоступен.');
+                    } else if (response.status === 404) {
+                        showError('❌ PDF гайда не найден.');
+                    } else {
+                        showError('❌ Ошибка загрузки гайда.');
+                    }
+                    return;
+                }
+
+                // Convert response to blob and download
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `guide-${guideId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+
+                showSuccess('✅ Гайд успешно загружен! Проверьте папку загрузок.');
+            } catch (error) {
+                console.error('Download error:', error);
+                showError('❌ Ошибка при загрузке файла. Попробуйте позже.');
+            }
         }
 
         // Logout
