@@ -84,7 +84,7 @@ const getGuideLabel = (guide, hasAccess) => {
  * @return {string} Description
  */
 const getContentDescription = (guide) => {
-  if (isGuideFreee(guide) && guide.content_type === 'markdown') {
+  if (isGuideFree(guide) && guide.content_type === 'markdown') {
     return 'Free Markdown Guide - Read in browser';
   }
 
@@ -135,7 +135,7 @@ module.exports = {
   isContentAccessible,
   isValidContentType,
   getContentType,
-  isGuideFreee,
+  isGuideFree,
   isGuidePaid,
   getGuideLabel,
   getContentDescription,
